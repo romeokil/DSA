@@ -21,16 +21,13 @@ public:
 
         // using map
         // jo bada hai usko change kr de rhe hai.
+        map<pair<int,int>,int> um;
         for(vector<int>& v:dominoes){
             int first=v[0];
             int second=v[1];
             if(first>second){
                 swap(v[0],v[1]);
             }
-        }
-        // saara ka map me entry kr de rhe hai.
-        map<pair<int,int>,int> um;
-        for(vector<int>& v:dominoes){
             if(um.find({v[0],v[1]})!=um.end()){
                 count+=um[{v[0],v[1]}];
             }
