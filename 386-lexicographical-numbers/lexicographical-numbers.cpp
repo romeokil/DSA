@@ -14,7 +14,7 @@ public:
     vector<int> lexicalOrder(int n) {
         vector<int> temp;
         unordered_set<int> st;
-        for(int i=1;i<=n;i++){
+        for(int i=1;i<=9;i++){
             solve(i,temp,n,st);
         }
         return temp;
