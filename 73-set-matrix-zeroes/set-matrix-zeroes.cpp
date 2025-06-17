@@ -23,17 +23,24 @@ public:
             }
         }
         // ab rest of visited matrix ko bhr dete hai.
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(matrix[i][j]!=0 && visited[i][j]!=0){
-                    visited[i][j]=matrix[i][j];
-                }
-            }
-        }
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<m;j++){
+        //         if(matrix[i][j]!=0 && visited[i][j]!=0){
+        //             visited[i][j]=matrix[i][j];
+        //         }
+        //     }
+        // }
         // wapas visited waale se matrix me daal dete hai inplcae bola tha.
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<m;j++){
+        //         matrix[i][j]=visited[i][j];
+        //     }
+        // }
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                matrix[i][j]=visited[i][j];
+                if(visited[i][j]==0) {
+                    matrix[i][j]=0;
+                }
             }
         }
     }
