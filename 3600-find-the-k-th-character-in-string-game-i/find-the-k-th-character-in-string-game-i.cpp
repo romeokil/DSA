@@ -1,14 +1,15 @@
 class Solution {
 public:
     char kthCharacter(int k) {
-        string result="a";
-        while(result.length()<k){
-            string temp="";
-            for(int i=0;i<result.length();i++){
-                temp.push_back(char(result[i]+1));
-            }
-            result+=temp;
+        int countsetbits=0;
+        int index=k-1;
+        while(index>0){
+            int temp=index%2;
+            // cout<<"temp->"<<temp<<endl;
+            if(temp==1) countsetbits++;
+            index=index/2;
         }
-        return result[k-1];
+        cout<<"countsetbits"<<countsetbits<<endl;
+        return char('a'+countsetbits);
     }
 };
