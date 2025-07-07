@@ -10,7 +10,11 @@ public:
         int count=0;
         int i=0;
         while(!pq.empty() || i<n){
-
+            // hmlog direct kud jaege day ek ek karke ni 
+            // badhana pdega.
+            if(pq.empty()){
+                day=events[i][0];
+            }
             // same day wala saaara lounda ko daal diye.
             while(i<n && events[i][0]==day){
                 pq.push(events[i][1]);
