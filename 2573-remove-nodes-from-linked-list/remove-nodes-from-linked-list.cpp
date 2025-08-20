@@ -10,20 +10,21 @@
  */
 class Solution {
 public:
-    void reverse(ListNode*& newhead, ListNode* curr) {
-        //
-        if (curr->next == NULL) {
-            newhead = curr;
-            return;
-        }
-        reverse(newhead, curr->next);
-        ListNode* prev = curr;
-        curr->next->next = prev;
-        curr->next = NULL;
-    }
+    // void reverse(ListNode*& newhead, ListNode* curr) {
+    //     //
+    //     if (curr->next == NULL) {
+    //         newhead = curr;
+    //         return;
+    //     }
+    //     reverse(newhead, curr->next);
+    //     ListNode* prev = curr;
+    //     curr->next->next = prev;
+    //     curr->next = NULL;
+    // }
     ListNode* removeNodes(ListNode* head) {
         stack<int> st;
         ListNode* temp = head;
+        vector<int> result;
         while (temp != NULL) {
             while (!st.empty() && (temp->val) > st.top()) {
                 st.pop();
@@ -31,23 +32,42 @@ public:
             st.push(temp->val);
             temp = temp->next;
         }
-        ListNode* newhead = NULL;
-        temp = newhead;
-        while (!st.empty()) {
-            int top = st.top();
-            if (newhead == NULL) {
-                ListNode* newNode = new ListNode(top);
-                newhead = newNode;
-                temp = newhead;
-            } else {
-                ListNode* newNode = new ListNode(top);
-                temp->next = newNode;
-                temp = temp->next;
-            }
-            st.pop();
+        ListNode* temp1=head;
+        ListNode* prev=head;
+        // 2 approach->
+        while(!st.empty()){
+            int top=st.top();st.pop();
+            cout<<"top"<<top<<endl;
+            result.push_back(top);
         }
-        ListNode* curr = newhead;
-        reverse(newhead, curr);
-        return newhead;
+        reverse(result.begin(),result.end());
+        for(int i=0;i<result.size();i++){
+            cout<<"ele-> "<<result[i]<<endl;
+            temp1->val=result[i];
+            prev=temp1;
+            temp1=temp1->next;
+        }
+        prev->next=NULL;
+        return head;
+        // return head;
+        // ListNode* newhead = NULL;
+        // temp = newhead;
+        // while (!st.empty()) {
+        //     int top = st.top();
+        //     if (newhead == NULL) {
+        //         ListNode* newNode = new ListNode(top);
+        //         newhead = newNode;
+        //         temp = newhead;
+        //     } else {
+        //         ListNode* newNode = new ListNode(top);
+        //         temp->next = newNode;
+        //         temp = temp->next;
+        //     }
+        //     st.pop();
+        // }
+        
+        // ListNode* curr = newhead;
+        // reverse(newhead, curr);
+        // return newhead;
     }
 };
