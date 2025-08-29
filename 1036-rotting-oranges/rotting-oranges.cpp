@@ -1,56 +1,40 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-       int n=grid.size();
-       int m=grid[0].size();
-       queue<pair<int,int>> q;
-       vector<pair<int,int>> directions={{-1,0},{1,0},{0,-1},{0,1}};
-       int time=0;
-       int freshOranges=0;
+        queue<pair<int,int>> q;
+        int n=grid.size();
+        int m=grid[0].size();
+        int count=0;
+        int freshorangesCount=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]==1){
-                    freshOranges++;
-                }
-                // ye krna jaruri ni hai qki esme sayd ek hi sada hua hota hai but phir bhi
-                // hm safety measure lene ke liye aisa kr liye.
-                if(grid[i][j]==2){
-                    q.push({i,j});
-                }
+                if(grid[i][j]==2) q.push({i,j});
+                else if(grid[i][j]==1) freshorangesCount++;
             }
         }
-        if(freshOranges==0) return 0;
+        vector<vector<int>> directions={{-1,0},{1,0},{0,-1},{0,1}};
+        // if There were no Fresh Oranges, then how you make them Rotten.
+        if(freshorangesCount==0) return 0;
         while(!q.empty()){
             int size=q.size();
-            bool sarahuanikla=false;
+            bool pushOranges=false;
             for(int i=0;i<size;i++){
                 pair<int,int> p=q.front();q.pop();
-                int row=p.first;
-                int col=p.second;
-                for(auto it:directions){
-                    int updatedrow=it.first+row;
-                    int updatedcolumn=it.second+col;
-                    if((updatedrow>=0 && updatedrow<n) && (updatedcolumn>=0 && updatedcolumn<m) && (grid[updatedrow][updatedcolumn]==1)){
-                        q.push({updatedrow,updatedcolumn});
-                        grid[updatedrow][updatedcolumn]=2;
-                        sarahuanikla=true;
+                int x=p.first;
+                int y=p.second;
+                for(vector<int> dir:directions){
+                    int x_=x+dir[0];
+                    int y_=y+dir[1];
+                    if(x_>=0 && x_<n && y_>=0 && y_<m && grid[x_][y_]==1){
+                        q.push({x_,y_});
+                        grid[x_][y_]=2;
+                        freshorangesCount--;
+                        pushOranges=true;
                     }
                 }
             }
-            if(sarahuanikla) time++;
-            cout<<time<<endl;
+            if(pushOranges) count++;
         }
-        int remainingfreshOranges=0;
-        bool flag=false;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]==1){
-                    remainingfreshOranges++;
-                    flag=true;
-                }
-            }
-            if(flag) break;
-        }
-        return remainingfreshOranges!=0?-1:time;
-    } 
+        return freshorangesCount>0?-1:count; 
+    }
 };
