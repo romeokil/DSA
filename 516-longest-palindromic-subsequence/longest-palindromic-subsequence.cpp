@@ -1,30 +1,33 @@
 class Solution {
 public:
-    string reverse(string &s){
+    void reverse(string& s){
         int i=0,j=s.length()-1;
         while(i<j){
             swap(s[i],s[j]);
             i++;j--;
         }
-        return s;
-    }
-    int solve(int m,int n,string &originalString,string &reversedString,vector<vector<int>>& dp){
-        if(m==0 || n==0){
-            return 0;
-        }
-        if(dp[m][n]!=-1) return dp[m][n];
-        if(originalString[m-1]==reversedString[n-1]){
-            return dp[m][n]=1+solve(m-1,n-1,originalString,reversedString,dp);
-        }
-        return dp[m][n]=max(solve(m-1,n,originalString,reversedString,dp),solve(m,n-1,originalString,reversedString,dp));
     }
     int longestPalindromeSubseq(string s) {
         string originalString=s;
-        string reversedString=reverse(s);
-        // cout<<"reversedString"<<reversedString<<endl;
-        int m=originalString.length();
-        int n=reversedString.length();
-        vector<vector<int>> dp(m+1,vector<int>(n+1,-1));
-        return solve(m,n,originalString,reversedString,dp);
+        reverse(s);
+        int n=originalString.length();
+        int m=s.length();
+        vector<vector<int>> t(n+1,vector<int>(m+1,-1));
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
+                t[i][j]=0;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(originalString[i-1]==s[j-1]){
+                    t[i][j]=1+t[i-1][j-1];
+                }
+                else{
+                    t[i][j]=max(t[i-1][j],t[i][j-1]);
+                }
+            }
+        }
+        return t[n][m];
     }
 };
