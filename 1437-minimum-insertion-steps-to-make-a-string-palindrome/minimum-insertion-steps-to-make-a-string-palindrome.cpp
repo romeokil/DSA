@@ -1,38 +1,33 @@
 class Solution {
 public:
-    string reverse(string& s) {
-        int i = 0, j = s.length() - 1;
-        while (i < j) {
-            swap(s[i], s[j]);
-            i++;
-            j--;
+    void reverse(string &s){
+        int i=0,j=s.length()-1;
+        while(i<j){
+            swap(s[i],s[j]);
+            i++;j--;
         }
-        return s;
-    }
-    int solve(int m, int n, string& originalString, string& reversedString,
-              vector<vector<int>>& dp) {
-        if (m == 0 || n == 0) {
-            return 0;
-        }
-        if (dp[m][n] != -1)
-            return dp[m][n];
-        if (originalString[m - 1] == reversedString[n - 1]) {
-            return dp[m][n] = 1 + solve(m - 1, n - 1, originalString,
-                                        reversedString, dp);
-        }
-        return dp[m][n] =
-                   max(solve(m - 1, n, originalString, reversedString, dp),
-                       solve(m, n - 1, originalString, reversedString, dp));
     }
     int minInsertions(string s) {
-        string originalString = s;
-        string reversedString = reverse(s);
-        // cout<<"reversedString"<<reversedString<<endl;
-        int m = originalString.length();
-        int n = reversedString.length();
-        vector<vector<int>> dp(m + 1, vector<int>(n + 1, -1));
-        int longest_palindromic_subsequence =
-            solve(m, n, originalString, reversedString, dp);
-        return s.length() - longest_palindromic_subsequence;
+        int n=s.length();
+        int m=n;
+        vector<vector<int>> t(n+1,vector<int>(m+1,-1));
+        string originalstring=s;
+        reverse(s);
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
+                if(i==0 || j==0) t[i][j]=0;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(originalstring[i-1]==s[j-1]){
+                    t[i][j]=1+t[i-1][j-1];
+                }else{
+                    t[i][j]=max(t[i-1][j],t[i][j-1]);
+                }
+            }
+        }
+        int length_of_common_subs=t[n][m];
+        return n-length_of_common_subs;
     }
 };
