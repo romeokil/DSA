@@ -1,15 +1,22 @@
 class Solution {
 public:
-    int climbStairs(int n) {
-        if(n==0) return 0;
-        if(n==1) return 1;
-        if(n==2) return 2;
-        int curr=2,prev=1,next=0;
-        for(int i=3;i<=n;i++){
-            next=curr+prev;
-            prev=curr;
-            curr=next;
+    int solve(int i,int n,vector<int>& dp){
+
+        if(i>=n){
+            if(i==n) return 1;
+            else return 0;
         }
-        return next;
+        if(dp[i]!=-1) return dp[i];
+        // ya toh ek step chado
+        int oneStep=solve(i+1,n,dp);
+
+        // ya ek saath do step chado.
+        int twoStep=solve(i+2,n,dp);
+
+        return dp[i]=oneStep+twoStep;
+    }
+    int climbStairs(int n) {
+        vector<int> dp(n+1,-1);
+        return solve(0,n,dp);
     }
 };
