@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void solve(vector<int> temp,vector<vector<int>> &result,vector<int> nums,vector<bool> visited){
+    void solve(vector<int> temp,vector<vector<int>> &result,vector<int> nums,vector<bool>& visited){
         if(temp.size()==nums.size()){
             result.push_back(temp);
             return ;
