@@ -14,6 +14,9 @@ public:
         unordered_map<int,vector<int>> invokedby;
         vector<bool> visited(n,false);
         unordered_set<int> suspicion;
+        // hmlog whi method ko uda skte the jo ki suspicion me involve ni tha
+        // and ye hmlog information koi bhi bnda kisse invoked hua hai usi se nikal skte hai.
+        // or result me aisa lounda aaega jo suspicion me involve ni tha.
         vector<int> result;
         for(const vector<int>& v:invocations){
             int invokekrnewala=v[0];
