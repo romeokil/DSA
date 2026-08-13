@@ -3,9 +3,9 @@ class Solution:
         n=len(nums)
         i,j=0,0
         result=0
-        um={}
+        um=defaultdict(int)
         while j<n:
-            um[nums[j]]=um.get(nums[j],0)+1
+            um[nums[j]]+=1
             while i<j and um[nums[j]]>k:
                 um[nums[i]]-=1
                 i+=1
